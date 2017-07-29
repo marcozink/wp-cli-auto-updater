@@ -2,7 +2,7 @@
 # Author: Marco Zink
 # https://github.com/marcozink/wp-cli-auto-updater/
 # Licence GNU GPLv3
-
+WEBDIR=/var/www
 BLUE='\033[0;34m'
 LIGHTGRAY='\033[0;37m'
 LIGHTPURPLE='\033[1;35m'
@@ -18,6 +18,7 @@ do
     h)
      echo "WordPress Auto-Updater:
      This script will find all the WordPress installations under a path, and update, languages, plugins, themes and core instalations.
+     Define the WEBDIR variable in the header section of this script to point to where your WordPress installations are. Consider this will only search one level down.
      It will also send pushover notifications, make sure you have it in your PATH with.
      -q option will not send PushOver notifications." 1>&2
      echo "Usage:\n    As root: ./wp-updater.sh {-q}" 1>&2
@@ -34,7 +35,7 @@ echo -e "${BLUE}Actualizando WP-CLI${NC}"
 wget -q https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
-for i in $(find /var/www -name "wp-config.php"|cut -d"/" -f4)
+for i in $(find $WEBDIR -name "wp-config.php"|cut -d"/" -f4)
 do
 	SITE=$i
 	echo -e "${LIGHTPURPLE}Working with $SITE${NC}"
